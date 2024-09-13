@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilm, faGlobe, faTrophy, faMedal, faSearch, faTimes, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const genresOptions = [
   'Action', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Romance',
