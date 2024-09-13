@@ -1,11 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
 
-const slideVariants = {
-  hidden: { opacity: 0, x: -100 },  // Initial state: hidden and slightly off-screen
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },  // Final state: visible and in place
-};
-
 const TitleSlide = () => (
   <motion.div
     className="flex flex-col items-center justify-center h-full text-white texture"
@@ -297,7 +292,7 @@ const NeorealismDeclineSlide = () => (
   <div className="flex flex-col items-center justify-center h-full text-white bg-gradient-to-br from-red-900 to-black">
     <h2 className="text-4xl font-bold mb-8">The Fading of the Movement</h2>
     <div className="relative w-3/4 h-1/2 mb-8">
-      <img src="/api/placeholder/800/400" alt="Symbolic image of decline" className="w-full h-full object-cover rounded-lg shadow-2xl" />
+      <img src="/api/placeholder/800/400" alt="Symbolic of decline" className="w-full h-full object-cover rounded-lg shadow-2xl" />
       <div className="absolute inset-0 bg-black opacity-50 rounded-lg"></div>
     </div>
     <ul className="list-disc pl-6 text-xl w-3/4">
@@ -318,7 +313,7 @@ const ConclusionSlide = () => (
       </ul>
     </div>
     <div className="relative">
-      <img src="/api/placeholder/600/800" alt="Powerful neorealist film image" className="absolute inset-0 w-full h-full object-cover" />
+      <img src="/api/placeholder/600/800" alt="Powerful neorealist" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black opacity-30"></div>
     </div>
   </div>

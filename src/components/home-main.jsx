@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Button, PlayIcon, VideoIcon, BookmarkIcon } from 'evergreen-ui';
+import { Button, VideoIcon, BookmarkIcon } from 'evergreen-ui';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +40,8 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
     if (swiperInstanceRef.current) {
       swiperInstanceRef.current.slideToLoop(0, 0);
     }
-  }, [swiperInstanceRef.current]);
+    // Removed swiperInstanceRef.current from dependencies
+  }, []);
 
   const handleSwiperChange = (swiper) => {
     const newIndex = swiper.realIndex;
@@ -78,7 +79,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
         )}
         {/* Video Controls - Hidden on lg screens */}
         <div className="absolute bottom-4 right-4 flex space-x-2 lg:hidden">
-          <Button onClick={togglePlay} iconBefore={isPlaying ? "pause" : PlayIcon}>
+          <Button onClick={togglePlay} iconBefore={isPlaying ? "pause" : "play"}>
             {isPlaying ? "Pause" : "Play"}
           </Button>
           <Button onClick={toggleMute} iconBefore={isMuted ? "volume-off" : "volume-up"}>
@@ -107,7 +108,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
             <Button iconBefore={VideoIcon} appearance="primary" intent="none" height={32}>
               Trailer
             </Button>
-            <Button iconBefore={PlayIcon} appearance="primary" intent="success" height={32}>
+            <Button iconBefore="play" appearance="primary" intent="success" height={32}>
               Watch Now
             </Button>
             <Button

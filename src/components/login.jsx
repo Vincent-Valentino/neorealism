@@ -33,9 +33,6 @@ function LoginForm({ onChange, onSubmit, state }) {
         >
           Sign In
         </button>
-        <a href="#" className="text-sm text-blue-500 mt-2 block">
-          Forgot your password?
-        </a>
       </form>
     </div>
   );

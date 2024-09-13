@@ -5,7 +5,6 @@ import {
   faHome, 
   faFilm, 
   faUser, 
-  faShieldAlt, 
   faStar, 
   faCompass, 
   faSignOutAlt,
