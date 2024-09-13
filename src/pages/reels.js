@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { jwtDecode } from 'jwt-decode';
@@ -29,7 +29,7 @@ const ReelsPage = () => {
     const fetchReels = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch('http://localhost:4000/api/reels', {
+        const response = await fetch('https://neorealism-be.vercel.app/api/reels', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -50,6 +50,15 @@ const ReelsPage = () => {
     fetchReels();
   }, []);
 
+  // Memoize the handleVideoPause function to avoid it being recreated on every render
+  const handleVideoPause = useCallback(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (index !== currentReel && video) {
+        video.pause();
+      }
+    });
+  }, [currentReel]);
+
   useEffect(() => {
     handleVideoPause();
     if (videoRefs.current[currentReel]) {
@@ -57,7 +66,7 @@ const ReelsPage = () => {
         console.log('Auto-play failed:', error);
       });
     }
-  }, [currentReel]);
+  }, [currentReel, handleVideoPause]);
 
   const handleLike = async () => {
     try {
@@ -65,7 +74,7 @@ const ReelsPage = () => {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
 
-      const response = await fetch(`http://localhost:4000/api/reels/${reelData[currentReel]._id}/like`, {
+      const response = await fetch(`https://neorealism-be.vercel.app/api/reels/${reelData[currentReel]._id}/like`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +117,7 @@ const ReelsPage = () => {
         const decodedToken = jwtDecode(token);
         const user = decodedToken.username || 'Guest';
 
-        const response = await fetch(`http://localhost:4000/api/reels/${reelData[currentReel]._id}/comments`, {
+        const response = await fetch(`https://neorealism-be.vercel.app/api/reels/${reelData[currentReel]._id}/comments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -143,14 +152,6 @@ const ReelsPage = () => {
         videoRefs.current[currentReel].pause();
       }
     }
-  };
-
-  const handleVideoPause = () => {
-    videoRefs.current.forEach((video, index) => {
-      if (index !== currentReel && video) {
-        video.pause();
-      }
-    });
   };
 
   const toggleDescription = () => {

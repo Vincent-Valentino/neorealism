@@ -23,7 +23,7 @@ const MovieReviewsPage = () => {
 
   const fetchMovies = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/movies');
+      const response = await axios.get('https://neorealism-be.vercel.app/api/movies');
       setMovies(response.data);
     } catch (error) {
       console.error('Error fetching movies:', error);
@@ -32,7 +32,7 @@ const MovieReviewsPage = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/reviews');
+      const response = await axios.get('https://neorealism-be.vercel.app/api/reviews');
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -42,7 +42,7 @@ const MovieReviewsPage = () => {
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/reviews', {
+      await axios.post('https://neorealism-be.vercel.app/api/reviews', {
         ...newReview,
         movieId: selectedMovie._id,
       });

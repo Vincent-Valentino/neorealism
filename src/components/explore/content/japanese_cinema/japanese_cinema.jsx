@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  FilmIcon, CameraIcon, TvIcon, StarIcon, SunIcon, MoonIcon, 
-  CloudIcon, UmbrellaIcon, SakuraIcon, MountainIcon, WaveIcon, FireIcon
+  FilmIcon, CameraIcon, StarIcon, SunIcon, MoonIcon, 
 } from 'lucide-react';
 
 const Section = ({ title, children }) => {

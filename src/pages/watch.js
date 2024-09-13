@@ -10,7 +10,7 @@ const VideoPlayerPage = () => {
     const fetchMovie = async () => {
       if (movie_id) {
         try {
-          const response = await fetch(`http://localhost:4000/api/movies/${movie_id}`);
+          const response = await fetch(`https://neorealism-be.vercel.app/api/movies/${movie_id}`);
           const data = await response.json();
           console.log("API Response:", data);
           setMovie(data);

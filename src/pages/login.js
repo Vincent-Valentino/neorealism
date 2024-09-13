@@ -27,8 +27,8 @@ export default function AuthPage() {
     evt.preventDefault();
     
     const url = type === "signUp"
-      ? "http://localhost:4000/api/auth/signup"
-      : "http://localhost:4000/api/auth/login";
+      ? "https://neorealism-be.vercel.app/api/auth/signup"
+      : "https://neorealism-be.vercel.app/api/auth/login";
 
     const body = type === "signUp" 
       ? { username: state.username, email: state.email, password: state.password } 

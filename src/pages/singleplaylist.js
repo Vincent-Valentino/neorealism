@@ -17,8 +17,8 @@ const SinglePlaylist = () => {
     const fetchData = async () => {
       try {
         const [playlistResponse, moviesResponse] = await Promise.all([
-          fetch(`http://localhost:4000/api/playlist/${playlistId}`),
-          fetch('http://localhost:4000/api/movies')
+          fetch(`https://neorealism-be.vercel.app/api/playlist/${playlistId}`),
+          fetch('https://neorealism-be.vercel.app/api/movies')
         ]);
 
         if (!playlistResponse.ok || !moviesResponse.ok) {

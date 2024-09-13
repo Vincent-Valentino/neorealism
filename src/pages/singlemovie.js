@@ -10,7 +10,6 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [activeTab, setActiveTab] = useState('about');
-  const [showAwards, setShowAwards] = useState(false);
 
   const fetchMovie = useCallback(async () => {
     try {

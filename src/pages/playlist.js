@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/navbar";
-import { Play, Search, Plus, X } from 'lucide-react';
+import { Play, Search, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -9,7 +9,6 @@ import {
   TextInputField,
   TextareaField,
   Combobox, 
-  Badge, 
   Pill,
   toaster
 } from 'evergreen-ui';
@@ -168,7 +167,7 @@ const PlaylistPage = () => {
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/playlist/playlists');
+        const response = await fetch('https://neorealism-be.vercel.app/api/playlist/playlists');
         const data = await response.json();
         setPlaylists(data.playlists);
       } catch (error) {
@@ -184,7 +183,7 @@ const PlaylistPage = () => {
     if (term.length > 2) {
       try {
         // Send the search term as a query parameter to filter by playlist name
-        const response = await fetch(`http://localhost:4000/api/playlists/playlist?searchTerm=${term}`);
+        const response = await fetch(`https://neorealism-be.vercel.app/api/playlists/playlist?searchTerm=${term}`);
         const data = await response.json();
         setSearchResults(data);
       } catch (error) {
@@ -201,7 +200,7 @@ const PlaylistPage = () => {
     try {
       const token = localStorage.getItem('token'); // Get the JWT token from localStorage
   
-      const response = await fetch('http://localhost:4000/api/playlist/create', {
+      const response = await fetch('https://neorealism-be.vercel.app/api/playlist/create', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
@@ -214,7 +213,7 @@ const PlaylistPage = () => {
         setIsModalOpen(false);
   
         // Refetch playlists to update the list
-        const updatedPlaylistsResponse = await fetch('http://localhost:4000/api/playlist/playlists');
+        const updatedPlaylistsResponse = await fetch('https://neorealism-be.vercel.app/api/playlist/playlists');
         const updatedPlaylistsData = await updatedPlaylistsResponse.json();
         setPlaylists(updatedPlaylistsData.playlists);
       } else {

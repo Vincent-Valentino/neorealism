@@ -3,7 +3,7 @@ import { AuthContext } from './authprovider';
 
 const useAuth = () => {
   const [loading, setLoading] = useState(true);
-  const { Token, setToken, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  const { setToken, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   if (!setToken || !setIsAuthenticated) {
     throw new Error('AuthContext is not properly initialized.');
@@ -13,7 +13,6 @@ const useAuth = () => {
     const refreshAccessToken = async () => {
       try {
         const storedRefreshToken = localStorage.getItem('refreshToken');
-        const storedAccessToken = localStorage.getItem('token');
 
         if (!storedRefreshToken) {
           setIsAuthenticated(false);
@@ -22,7 +21,7 @@ const useAuth = () => {
         }
 
         // Attempt to refresh the access token using the refresh token
-        const response = await fetch('http://localhost:4000/api/refresh-token', {
+        const response = await fetch('https://neorealism-be.vercel.app/api/refresh-token', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${storedRefreshToken}`, // Send the refresh token

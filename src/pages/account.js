@@ -44,7 +44,7 @@ const AccountPage = ({ toggleBookmark }) => {
           return;
         }
 
-        const response = await fetch('http://localhost:4000/api/users/me', {
+        const response = await fetch('https://neorealism-be.vercel.app/api/users/me', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -61,7 +61,7 @@ const AccountPage = ({ toggleBookmark }) => {
         const data = await response.json();
 
         const movieDetailsPromises = data.bookmarks.map(async (movieId) => {
-          const movieResponse = await fetch(`http://localhost:4000/api/movies/${movieId}`, {
+          const movieResponse = await fetch(`https://neorealism-be.vercel.app/api/movies/${movieId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
