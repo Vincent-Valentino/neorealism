@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.texture{
+  background-image: url("../public/texture.jpg");
+}
+
+body {
+  font-family: 'Lato',sans-serif;
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% / 20)); /* Smooth circular scroll */
+  }
+}
+
+@keyframes infinite-scroll-reverse {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100% / 20)); /* Smooth circular reverse scroll */
+  }
+}
+
+.animate-carousel {
+  display: flex;
+  animation: infinite-scroll 60s linear infinite;
+}
+
+.animate-carousel-reverse {
+  display: flex;
+  animation: infinite-scroll-reverse 60s linear infinite;
+}
+
+
+@keyframes spin-slow {
+   from {
+     transform: rotate(0deg);
+   }
+   to {
+     transform: rotate(360deg);
+   }
+ }
+   
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.sepia {
+  filter: sepia(100%) brightness(85%) contrast(110%);
+}
+
+
+
+/* Add this CSS to your main stylesheet */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Add this in your global CSS file */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 2s ease-in-out;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes textFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.input-animation {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.animate-gradient-move {
+  background-size: 200% 200%;
+  animation: gradientMove 8s ease infinite;
+}
+
+.animate-text-fade {
+  animation: textFade 2s ease-in-out;
+}
+
+.animate-button-bounce {
+  animation: buttonBounce 2s infinite;
+}
+
+.gradientcustom{
+  animation: gradient 10s ease infinite;
+}

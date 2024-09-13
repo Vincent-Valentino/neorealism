@@ -1,0 +1,29 @@
+logout {navbar}
+
+review pages {
+  users write review about movies available in the website
+  rating from 1-10
+  search for reviews and movies
+  likes comments avatars
+  }
+
+complete admin pages{
+  complete message, users, and mega configuration pages
+  try upload and modify
+  }
+
+mega configuration{
+  complete backend config
+  }
+
+upload reels{
+  upload feature like tiktok in account.js
+  }
+
+complete reels pages{
+  functioning likes, comments, and randoming
+  }
+
+search optimation{  
+  query work together with genres and awards filtering
+  }
