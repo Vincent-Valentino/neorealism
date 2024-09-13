@@ -22,7 +22,7 @@ function App() {
   // Fetch bookmarks only if authenticated
   const fetchBookmarks = useCallback(async () => {
     try {
-      const response = await fetch('http://localhost:4000/api/users/bookmarks', {
+      const response = await fetch('https://neorealism-be.vercel.app/api/users/bookmarks', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -56,7 +56,7 @@ function App() {
       const isBookmarked = bookmarkedMovies[movieId];
 
       const response = await fetch(
-        `http://localhost:4000/api/users/bookmarks`,  
+        `https://neorealism-be.vercel.app/api/users/bookmarks`,  
         {
           method: isBookmarked ? 'DELETE' : 'POST',  // Use DELETE for unbookmarking and POST for bookmarking
           headers: {
