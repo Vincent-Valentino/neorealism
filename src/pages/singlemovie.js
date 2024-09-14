@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Loading from '../utilities/loading';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayIcon, VideoIcon, BookmarkIcon } from 'lucide-react';
@@ -32,7 +33,7 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
     else alert('Trailer not available');
   };
 
-  if (!movie) return <div>Loading...</div>;
+  if (!movie) return <div><Loading/></div>;
 
   return (
     <div className="bg-gray-900 min-h-screen text-white">
@@ -128,7 +129,7 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
 
         {/* Right Column - Action Buttons */}
         <div className="md:w-1/5 mt-8 md:mt-0">
-          <div className="lg:ml-10 sticky top-8 bg-gray-700 border-2 border-lapis-lazuli p-2 rounded-lg flex flex-col justify-center mx-auto mt-10">
+          <div className="lg:ml-10 sticky top-8 bg-transparent border-2 border-lapis-lazuli p-2 rounded-lg flex flex-col justify-center mx-auto mt-10">
             <Button
               marginX="auto"
               appearance="primary"

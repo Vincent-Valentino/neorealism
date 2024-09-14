@@ -77,14 +77,14 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
         {filteredMovies.map((movie, index) => (
           <motion.div
             key={movie._id || index}
-            className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden"
+            className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden cursor-pointer"
+            onClick={() => navigate(`/movies/${movie._id}`)}
           >
             <div className="relative">
               <img 
                 src={movie.poster} 
                 alt={movie.title} 
                 className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
-                onClick={() => navigate(`/movies/${movie._id}`)}
               />
               <BookmarkIcon
                 size={30}
@@ -110,7 +110,9 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   appearance="primary"
                   intent="success"
                   height={32}
-                  onClick={() => navigate(`/movies/${movie._id}/watch`)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/movies/${movie._id}/watch`)}}
                 >
                   Play
                 </Button>
@@ -137,7 +139,9 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   appearance="primary"
                   intent="warning"
                   height={32}
-                  onClick={() => setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}}
                 >
                   Info
                 </Button>
