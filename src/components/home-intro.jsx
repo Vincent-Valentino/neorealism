@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const MoviePlaylist = () => {
   const navigate = useNavigate();
   const [playlists, setPlaylists] = useState([]);  // State to store playlists
+  const [username, setUsername] = useState('');    // State to store the user's name
   const sectionRef = useRef(null);
 
   // Fetch playlists from the API
@@ -20,6 +21,26 @@ const MoviePlaylist = () => {
     };
 
     fetchPlaylists();  // Call the fetch function
+  }, []);
+
+  // Fetch user information from API or context
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const token = localStorage.getItem('token');  // Retrieve the token from localStorage
+        const response = await fetch('https://neorealism-be.vercel.app/api/users/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`  // Pass token in Authorization header
+          }
+        });
+        const data = await response.json();
+        setUsername(data.username);  // Assuming the API response has a username field
+      } catch (error) {
+        console.error('Error fetching user information:', error);
+      }
+    };
+
+    fetchUserInfo();  // Fetch user information
   }, []);
 
   // Animation for section scrolling
@@ -54,7 +75,9 @@ const MoviePlaylist = () => {
   return (
     <div className="w-full h-auto mt-[2px] mb-[2px] md:min-h-screen bg-gradient-to-br from-matte-black via-onyx-black to-night text-white p-8">
       <div ref={sectionRef} className="opacity-0 translate-y-10 transition-all duration-1000 ease-out">
-        <h2 className="text-3xl md:text-5xl font-bold mt-10 mb-10">What's on the watchlist tonight, Vincent?</h2>
+        <h2 className="text-3xl md:text-5xl font-bold mt-10 mb-10">
+          What's on the watchlist tonight, {username || 'Vincent'}?
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {slicedPlaylists.map((playlist, index) => (
             <div

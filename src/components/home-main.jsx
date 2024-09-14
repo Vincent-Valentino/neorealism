@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Button, VideoIcon, BookmarkIcon } from 'evergreen-ui';
+import { Button, VideoIcon, BookmarkIcon, PlayIcon } from 'evergreen-ui';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useNavigate } from 'react-router-dom';
@@ -105,10 +105,10 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
             </div>
           </div>
           <div className="flex flex-wrap justify-center lg:justify-start gap-2">
-            <Button iconBefore={VideoIcon} appearance="primary" intent="none" height={32}>
+            <Button iconBefore={VideoIcon} appearance="primary" intent="none" height={32} onClick={() => window.open(currentMovie.trailer)}>
               Trailer
             </Button>
-            <Button iconBefore="play" appearance="primary" intent="success" height={32}>
+            <Button iconBefore={PlayIcon} appearance="primary" intent="success" height={32} onClick={() => navigate(`/movies/${currentMovie._id}/watch`)}>
               Watch Now
             </Button>
             <Button

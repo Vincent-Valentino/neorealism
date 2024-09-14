@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pane, Spinner, Text,  Button, BookmarkIcon, VideoIcon, PlayIcon, StarIcon, UploadIcon } from "evergreen-ui";
+import { Pane, Spinner, Text, Button, BookmarkIcon, VideoIcon, PlayIcon } from "evergreen-ui";
 
 const isTokenExpired = (token) => {
   try {
@@ -18,17 +18,13 @@ const isTokenExpired = (token) => {
 
 const AccountPage = ({ toggleBookmark }) => {
   const [userData, setUserData] = useState({
-    reels: [],
-    bio: '',
-    likedReels: [],
     bookmarkedMovies: [],
-    reviews: [],
     username: '',
     avatar: '',
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(2); // Default to bookmarked movies
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,8 +43,7 @@ const AccountPage = ({ toggleBookmark }) => {
         const response = await fetch('https://neorealism-be.vercel.app/api/users/me', {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
-          credentials: 'include',
+          }
         });
 
         if (!response.ok) {
@@ -72,9 +67,9 @@ const AccountPage = ({ toggleBookmark }) => {
         const movies = await Promise.all(movieDetailsPromises);
 
         setUserData({
-          ...data,
           bookmarkedMovies: movies,
-          reviews: [], // Placeholder for reviews data
+          username: data.username,
+          avatar: data.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(data.username)}&background=random`,
         });
       } catch (error) {
         setError('Failed to load user data. Please try again.');
@@ -109,18 +104,20 @@ const AccountPage = ({ toggleBookmark }) => {
             <div className="md:col-span-1">
               <div className="bg-gray-800 rounded-lg p-6 sticky top-8">
                 <img 
-                  src={userData.avatar || 'https://via.placeholder.com/150'} 
+                  src={userData.avatar}
                   alt={userData.username}
                   className="w-32 h-32 rounded-full mx-auto mb-4"
                 />
                 <h2 className="text-2xl font-bold text-center mb-2">{userData.username}</h2>
-                <p className="text-center text-gray-400 mb-4">{userData.bio}</p>
                 <nav>
                   {tabs.map((tab, index) => (
                     <button
                       key={tab}
                       onClick={() => setSelectedTab(index)}
-                      className={`w-full text-left py-2 px-4 rounded ${selectedTab === index ? 'bg-purple-600' : 'hover:bg-gray-700'}`}
+                      className={`w-full text-left py-2 px-4 rounded ${
+                        selectedTab === index ? 'bg-purple-600' : 'hover:bg-gray-700'
+                      } ${index !== 2 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      disabled={index !== 2}
                     >
                       {tab}
                     </button>
@@ -139,11 +136,13 @@ const AccountPage = ({ toggleBookmark }) => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {selectedTab === 0 && <ReelsGrid reels={userData.reels} />}
-                  {selectedTab === 1 && <ReelsGrid reels={userData.likedReels} />}
-                  {selectedTab === 2 && <BookmarkedMovies movies={userData.bookmarkedMovies} handleToggleBookmark={handleToggleBookmark} />}
-                  {selectedTab === 3 && <ReviewsGrid reviews={userData.reviews} />}
-                  {selectedTab === 4 && <UploadReelForm />}
+                  {selectedTab === 2 && (
+                    <BookmarkedMovies
+                      movies={userData.bookmarkedMovies}
+                      handleToggleBookmark={handleToggleBookmark}
+                      navigate={navigate}
+                    />
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -154,45 +153,54 @@ const AccountPage = ({ toggleBookmark }) => {
   );
 };
 
-const ReelsGrid = ({ reels }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    {reels.map((reel) => (
-      <motion.div
-        key={reel.id}
-        className="bg-gray-800 rounded-lg overflow-hidden"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <img src={reel.thumbnail} alt={reel.title} className="w-full h-48 object-cover" />
-        <div className="p-4">
-          <h3 className="text-lg font-semibold mb-2">{reel.title}</h3>
-          <p className="text-gray-400">{reel.description}</p>
-        </div>
-      </motion.div>
-    ))}
-  </div>
-);
-
-const BookmarkedMovies = ({ movies, handleToggleBookmark }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+const BookmarkedMovies = ({ movies, handleToggleBookmark, navigate }) => (
+  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-x-2 lg:gap-y-6">
     {movies.map((movie) => (
       <motion.div
         key={movie.data._id}
-        className="bg-gray-800 rounded-lg overflow-hidden relative"
+        className="bg-night border border-licorice rounded-lg shadow-lg overflow-hidden"
         whileHover={{ scale: 1.05 }}
       >
-        <img src={movie.data.poster} alt={movie.data.title} className="w-full h-auto object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4">
-          <h3 className="text-lg font-semibold mb-4 text-center">{movie.data.title}</h3>
-          <div className="space-y-2 flex justify-center flex-col">
-            <Button width='160' iconBefore={VideoIcon} appearance="primary" intent="none">Trailer</Button>
-            <Button width='160' iconBefore={PlayIcon} appearance="primary" intent="success">Watch Now</Button>
+        <img 
+          src={movie.data.poster} 
+          alt={movie.data.title} 
+          className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
+          onClick={() => navigate(`/movies/${movie.data._id}`)}
+        />
+        <div className="p-4">
+          <h3 className="text-lg font-semibold mb-2 text-white truncate">{movie.data.title}</h3>
+          <div className="flex flex-col space-y-2">
             <Button 
-              width='160'
-              iconBefore={BookmarkIcon} 
-              appearance="primary" 
-              intent="warning"
-              onClick={() => handleToggleBookmark(movie.data._id)}
+              iconBefore={PlayIcon}
+              appearance="primary"
+              intent="success"
+              onClick={() => navigate(`/movies/${movie.data._id}/watch`)}
+            >
+              Watch Now
+            </Button>
+            <Button 
+              iconBefore={VideoIcon}
+              appearance="primary"
+              intent="none"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (movie.data.trailer) {
+                  window.open(movie.data.trailer, '_blank');
+                } else {
+                  alert('Trailer not available');
+                }
+              }}
+            >
+              Trailer
+            </Button>
+            <Button 
+              iconBefore={BookmarkIcon}
+              appearance="primary"
+              intent="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleBookmark(movie.data._id);
+              }}
             >
               Unbookmark
             </Button>
@@ -200,45 +208,6 @@ const BookmarkedMovies = ({ movies, handleToggleBookmark }) => (
         </div>
       </motion.div>
     ))}
-  </div>
-);
-
-const ReviewsGrid = ({ reviews }) => (
-  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    {reviews.map((review, index) => (
-      <motion.div
-        key={index}
-        className="bg-gray-800 rounded-lg p-6"
-        whileHover={{ scale: 1.02 }}
-      >
-        <h3 className="text-lg font-semibold mb-2">{review.movieTitle}</h3>
-        <div className="flex items-center mb-2">
-          {[...Array(5)].map((_, i) => (
-            <StarIcon key={i} color={i < review.rating ? 'yellow' : 'gray'} marginRight={4} />
-          ))}
-        </div>
-        <p className="text-gray-400">{review.content}</p>
-      </motion.div>
-    ))}
-  </div>
-);
-
-const UploadReelForm = () => (
-  <div className="bg-gray-800 rounded-lg p-6">
-    <h2 className="text-2xl font-bold mb-4">Upload a New Reel</h2>
-    <form className="space-y-4">
-      <div>
-        <label className="block mb-2">Title</label>
-        <input type="text" className="w-full bg-gray-700 rounded px-3 py-2" />
-      </div>
-      <div>
-        <label className="block mb-2">Description</label>
-        <textarea className="w-full bg-gray-700 rounded px-3 py-2" rows="4"></textarea>
-      </div>
-      <Button appearance="primary" intent="success" iconBefore={UploadIcon}>
-        Select Reel to Upload
-      </Button>
-    </form>
   </div>
 );
 

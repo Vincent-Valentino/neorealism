@@ -12,16 +12,16 @@ function Home({ bookmarkedMovies, toggleBookmark }) {
 
   // Predefined clips for movies
   const MoviesClip = [
-    `yourname.mp4`, 
-    `akira.mp4`, 
-    `interstellar.mp4`, 
-    `theshining.mp4`,
-    `apocalypsenow.mp4`,
-    `yiyi.mp4`,
-    `eternalsunshine.mp4`,
-    `blackswan.mp4`,
-    `taxidriver.mp4`,
-    `dreams.mp4`
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726308030/clips/oacfatiopkyrpyumcv0o.mp4`, 
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307850/clips/kk9flanvzzjnpr1ehnqu.mp4`, 
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307898/clips/eo6lgcpwx9x82kwqltol.mp4`, 
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307896/clips/asqok5embwaxnob8s8sm.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307867/clips/zeybt1uzsx7kw1g1y4wl.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307902/clips/jndwfx8usutxcigj6htv.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307846/clips/igohybvtaj4azgdmkoor.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307848/clips/utirofg4qxfpszysshac.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307897/clips/qhcnusv58cwbixrsvgyu.mp4`,
+    `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726307826/clips/c9v0rrselrtvgywrni1d.mp4`
   ];
 
   // useEffect hook to fetch movies when the component mounts

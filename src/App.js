@@ -135,7 +135,7 @@ function App() {
       <Route 
         path="/playlist/:playlistId" 
         element={
-          <ProtectedRoute element={<SinglePlaylist />} />
+          <ProtectedRoute element={<SinglePlaylist bookmarkedMovies={bookmarkedMovies} toggleBookmark={toggleBookmark} />} />
         }
       />
 

@@ -84,7 +84,7 @@ const Navbar = () => {
           <div className="flex-grow overflow-y-auto">
             <NavLink to="/home" icon={faHome}>Home</NavLink>
             <NavLink to="/movies" icon={faFilm}>Movies</NavLink> {/* New /movies path */}
-            <NavLink disabled to="/coming" icon={faUser}>Account</NavLink> {/* Disabled */}
+            <NavLink to="/account" icon={faUser}>Account</NavLink> {/* Disabled */}
             <NavLink to="/playlist" icon={faTv}>Playlist</NavLink>
             <NavLink disabled to="/coming" icon={faStar}>Review</NavLink> {/* Disabled */}
             <NavLink disabled to="/coming" icon={faCompass}>Explore</NavLink> {/* Disabled */}
