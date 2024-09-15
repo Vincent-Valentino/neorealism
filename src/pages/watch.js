@@ -35,7 +35,7 @@ const VideoPlayerPage = () => {
         <div className="aspect-video bg-black mb-8">
           {/* Play the video using the media link */}
           {movie ? (
-            <iframe title='Welcome' src={`https://vidsrc.cc/v2/embed/movie/${movie.data.media}`} className='border-2 border-black' name="myiFrame" allowFullScreen></iframe>
+            <iframe title='Welcome' src={`https://vidsrc.cc/v2/embed/movie/${movie.data.media}`} className='w-full h-full border-2 border-black' name="myiFrame" allowFullScreen></iframe>
           ) : (
             <div><Loading/></div>
           )}

@@ -154,36 +154,39 @@ const AccountPage = ({ toggleBookmark }) => {
 };
 
 const BookmarkedMovies = ({ movies, handleToggleBookmark, navigate }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-x-2 lg:gap-y-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
     {movies.map((movie) => (
       <motion.div
         key={movie.data._id}
-        className="bg-night border border-licorice rounded-lg shadow-lg overflow-hidden"
-        whileHover={{ scale: 1.05 }}
+        className="bg-night border border-licorice rounded-lg shadow-lg overflow-hidden flex flex-col"
+        whileHover={{ scale: 1.03 }}
       >
-        <img 
-          src={movie.data.poster} 
-          alt={movie.data.title} 
-          className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
-          onClick={() => navigate(`/movies/${movie.data._id}`)}
-        />
-        <div className="p-4">
+        <div className="relative pt-[150%] w-full">
+          <img 
+            src={movie.data.poster} 
+            alt={movie.data.title} 
+            className="absolute top-0 left-0 w-full h-full object-cover rounded-t-lg cursor-pointer"
+            onClick={() => navigate(`/movies/${movie.data._id}`)}
+          />
+        </div>
+        <div className="p-4 flex-grow flex flex-col justify-between">
           <h3 className="text-lg font-semibold mb-2 text-white truncate">{movie.data.title}</h3>
           <div className="flex flex-col space-y-2">
             <Button 
-              iconBefore={PlayIcon}
-              appearance="primary"
+              appearance="primary" 
+              className="w-full"
+              variant="default"
               intent="success"
               onClick={() => navigate(`/movies/${movie.data._id}/watch`)}
             >
-              Watch Now
+              <PlayIcon className="w-4 h-4 mr-2" /> Watch Now
             </Button>
             <Button 
-              iconBefore={VideoIcon}
-              appearance="primary"
+              appearance="primary" 
+              className="w-full"
+              variant="default"
               intent="none"
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 if (movie.data.trailer) {
                   window.open(movie.data.trailer, '_blank');
                 } else {
@@ -191,18 +194,16 @@ const BookmarkedMovies = ({ movies, handleToggleBookmark, navigate }) => (
                 }
               }}
             >
-              Trailer
+              <VideoIcon className="w-4 h-4 mr-2" /> Trailer
             </Button>
             <Button 
-              iconBefore={BookmarkIcon}
-              appearance="primary"
+              appearance="primary" 
+              className="w-full"
+              variant="default"
               intent="danger"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleBookmark(movie.data._id);
-              }}
+              onClick={() => handleToggleBookmark(movie.data._id)}
             >
-              Unbookmark
+              <BookmarkIcon className="w-4 h-4 mr-2" /> Unbookmark
             </Button>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Loading from "../utilities/loading";
 import Navbar from '../components/navbar';
 import { motion } from 'framer-motion';
 import { Button, BookmarkIcon, VideoIcon, PlayIcon, InfoSignIcon } from "evergreen-ui";
@@ -42,7 +43,7 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
     fetchData();
   }, [playlistId]);
 
-  if (loading) return <div className="text-white">Loading...</div>;
+  if (loading) return <div className="text-white"><Loading /></div>;
   if (error) return <div className="text-white">Error: {error}</div>;
   if (!playlist) return <div className="text-white">No playlist data available</div>;
 
@@ -88,14 +89,13 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                 <motion.div
                   key={movie._id || index}
                   className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden"
-                  onClick={() => navigate(`/movies/${movie._id}/watch`)}
+                  onClick={() => navigate(`/movies/${movie._id}`)}
                 >
                   <div className="relative">
                     <img 
                       src={movie.poster} 
                       alt={movie.title} 
                       className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
-                      onClick={() => navigate(`/movies/${movie._id}`)}
                     />
                     <BookmarkIcon
                       size={30}
@@ -121,7 +121,9 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                         appearance="primary"
                         intent="success"
                         height={32}
-                        onClick={() => navigate(`/movies/${movie._id}/watch`)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/movies/${movie._id}/watch`)}}
                       >
                         Play
                       </Button>
@@ -148,7 +150,9 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                         appearance="primary"
                         intent="warning"
                         height={32}
-                        onClick={() => setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}}
                       >
                         Info
                       </Button>
@@ -189,7 +193,9 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                       appearance="primary" 
                       intent="success" 
                       height={28}
-                      onClick={() => navigate(`/movies/${movie._id}/watch`)}
+                      onClick={(e) =>{
+                        e.stopPropagation();
+                        navigate(`/movies/${movie._id}/watch`)}}
                     >
                       Watch Now
                     </Button>

@@ -14,7 +14,7 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
 
   const fetchMovie = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/movies/${movie_id}`);
+      const response = await fetch(`https://neorealism-be.vercel.app/api/movies/${movie_id}`);
       if (!response.ok) throw new Error("Failed to fetch movie data");
       const data = await response.json();
       setMovie(data.data);
