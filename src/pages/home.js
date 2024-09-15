@@ -7,9 +7,10 @@ import SearchDisplay from "../components/home-searchdisplay.jsx";
 
 function Home({ bookmarkedMovies, toggleBookmark }) {
   const [movies, setMovies] = useState([]);  // State for all movies
+  const [randomizedMovies, setRandomizedMovies] = useState([]);  // State for shuffled movies
   const [filteredMovies, setFilteredMovies] = useState([]);  // State for filtered movies
-  const [selectedMovies, setSelectedMovies] = useState([]);  // State for selected movies
-
+  const [selectedMovies, setSelectedMovies] = useState([]);  // State for specific selected movies
+  console.log(movies);
   // Predefined clips for movies
   const MoviesClip = [
     `https://res.cloudinary.com/dcouq3fyf/video/upload/v1726308030/clips/oacfatiopkyrpyumcv0o.mp4`, 
@@ -35,8 +36,12 @@ function Home({ bookmarkedMovies, toggleBookmark }) {
         }
         const data = await response.json();
         if (isActive) {
-          setMovies(data);
-          setFilteredMovies(data);
+          setMovies(data);  // Save original fetched movies
+
+          // Randomize movies once after fetching
+          const randomized = randomizeMoviesArray(data);
+          setRandomizedMovies(randomized);  // Use the randomized data for initial display
+          setFilteredMovies(randomized);  // Initialize filtered movies with the randomized data
 
           // Filter and select specific movies by title
           const selectedTitles = [
@@ -65,8 +70,18 @@ function Home({ bookmarkedMovies, toggleBookmark }) {
     };
   }, []);
 
+  // Efficient shuffling function
+  const randomizeMoviesArray = (moviesArray) => {
+    const moviesCopy = [...moviesArray]; // Copy the array to avoid mutation
+    for (let i = moviesCopy.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      [moviesCopy[i], moviesCopy[randomIndex]] = [moviesCopy[randomIndex], moviesCopy[i]]; // Swap elements
+    }
+    return moviesCopy;
+  };
+
   const handleFilterChange = (filter) => {
-    const filtered = movies.filter(movie => {
+    const filtered = randomizedMovies.filter(movie => {
       const matchesGenres = filter.genres.length === 0 || filter.genres.every(genre => movie.genres.includes(genre));
       const matchesCountry = filter.country === '' || movie.country === filter.country;
       const matchesAward = !filter.award || (
@@ -86,7 +101,7 @@ function Home({ bookmarkedMovies, toggleBookmark }) {
   };
   
   const handleSearch = (searchTerm) => {
-    const filtered = movies.filter(movie => {
+    const filtered = randomizedMovies.filter(movie => {
       const titleMatch = movie.title.toLowerCase().includes(searchTerm.toLowerCase());
       const directorMatch = movie.director.toLowerCase().includes(searchTerm.toLowerCase());
       const castMatch = movie.cast.some(castMember =>

@@ -7,10 +7,6 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
   const navigate = useNavigate();
   const [showOverview, setShowOverview] = useState({});
 
-  if (!movies || movies.length === 0) {
-    return <div className="p-4 text-center text-gray-400">No movies to display.</div>;
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -127,9 +123,7 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
                 appearance="primary" 
                 intent="success" 
                 height={28}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/movies/${movie._id}/watch`)}}
+                onClick={() => navigate(`/movies/${movie._id}/watch`)}
               >
                 Watch Now
               </Button>
@@ -156,7 +150,7 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
           whileTap={{ scale: 0.95 }}
           className="mt-8 text-center"
         >
-          <Button onClick={()=>navigate("/movies")} appearance="primary" intent="none" height={40}>
+          <Button onClick={() => navigate("/movies")} appearance="primary" intent="none" height={40}>
             Load More
           </Button>
         </motion.div>
