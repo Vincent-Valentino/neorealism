@@ -47,7 +47,7 @@
     const [selectedAward, setSelectedAward] = useState('');
     const [selectedAwardStatus, setSelectedAwardStatus] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
-    const [isFilterExpanded, setIsFilterExpanded] = useState(true);
+    const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
     const handleSelectGenre = (genre) => {
       if (!selectedGenres.includes(genre) && selectedGenres.length < 3) {

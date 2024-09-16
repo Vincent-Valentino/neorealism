@@ -141,7 +141,7 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
 
           {/* Right Column - Action Buttons */}
           <div className="lg:w-1/3 mt-8">
-            <div className="sticky top-8 bg-gray-800 border-2 border-blue-500 p-4 rounded-lg flex flex-col justify-center mx-auto mt-10">
+            <div className="sticky top-8 bg-gray-800 border-2 border-onyx-black p-4 rounded-lg flex flex-col justify-center mx-auto mt-10">
               <Button
                 marginX="auto"
                 appearance="primary"

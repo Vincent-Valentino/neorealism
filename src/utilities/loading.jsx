@@ -17,11 +17,11 @@ const ClapperboardAnimation = () => {
         >
           {/* Stripes on the clapperboard */}
           <div className="h-full flex">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(9)].map((_, i) => (
               <div key={i} className="flex-1 bg-black mx-1" />
             ))}
           </div>
-        </motion.div>
+        </motion.div> 
         
         {/* Clapperboard stick */}
         <motion.div

@@ -44,16 +44,16 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
             </div>
             <div className="p-2 lg:hidden flex-grow flex flex-col justify-between">
               <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
-              <div className="flex justify-between space-x-2">
+              <div className="flex justify-between gap-2 mx-auto">
                 <IconButton 
                   icon={PlayIcon}
                   appearance="primary"
                   intent="none"
                   height={32}
-                  className="flex-1 flex justify-center items-center"
+                  className="w-[30%] flex justify-center items-center"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(`/movies/${movie._id}/watch`)
+                    navigate(`/movies/${movie._id}/watch`);
                   }}
                 />
                 <IconButton 
@@ -61,7 +61,7 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
                   appearance="primary"
                   intent="success"
                   height={32}
-                  className="flex-1 flex justify-center items-center"
+                  className="w-[30%] flex justify-center items-center"
                   onClick={(e) => {
                     e.stopPropagation();
                     if (movie.trailer) {
@@ -76,10 +76,10 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
                   appearance="primary"
                   intent="danger"
                   height={32}
-                  className="flex-1 flex justify-center items-center"
+                  className="w-[30%] flex justify-center items-center"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))
+                    setShowOverview(prev => !prev);
                   }}
                 />
               </div>
