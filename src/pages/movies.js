@@ -3,12 +3,14 @@ import Navbar from "../components/navbar.jsx";
 import SearchFilter from "../components/home-searchfilter.jsx";
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Button, PlayIcon, VideoIcon, BookmarkIcon, InfoSignIcon } from 'evergreen-ui';
+import { IconButton, Button, PlayIcon, VideoIcon, BookmarkIcon, InfoSignIcon } from 'evergreen-ui';
+import Loading from '../utilities/loading'; // Import the Loading component
 
 function Movies({ bookmarkedMovies, toggleBookmark }) {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [showOverview, setShowOverview] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,8 +24,10 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
         const randomizedMovies = randomizeMoviesArray(data); // Randomize movies once
         setMovies(randomizedMovies);
         setFilteredMovies(randomizedMovies); // Initialize filteredMovies with all movies
+        setLoading(false); // Set loading to false once data is fetched
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+        setLoading(false); // Stop loading in case of an error
       }
     };
 
@@ -74,6 +78,11 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
     setFilteredMovies(filtered);
   };
 
+  // Conditional rendering for loading state
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <Navbar />
@@ -91,11 +100,11 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
               className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden cursor-pointer"
               onClick={() => navigate(`/movies/${movie._id}`)}
             >
-              <div className="relative">
+              <div className="relative cursor-pointer aspect-[2/3] overflow-hidden">
                 <img 
                   src={movie.poster} 
                   alt={movie.title} 
-                  className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
+                  className="w-full h-full object-cover absolute top-0 left-0"
                 />
                 <BookmarkIcon
                   size={30}
@@ -112,52 +121,48 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   </div>
                 )}
               </div>
-              <div className="p-2 lg:hidden">
-                <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
-                <div className="flex flex-col space-y-2">
-                  <Button 
-                    width="100%"
-                    iconBefore={PlayIcon}
-                    appearance="primary"
-                    intent="success"
-                    height={32}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/movies/${movie._id}/watch`)}}
-                  >
-                    Play
-                  </Button>
-                  <Button 
-                    width="100%"
-                    iconBefore={VideoIcon}
-                    appearance="primary"
-                    intent="none"
-                    height={32}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (movie.trailer) {
-                        window.open(movie.trailer, '_blank');
-                      } else {
-                        alert('Trailer not available');
-                      }
-                    }}
-                  >
-                    Trailer
-                  </Button>
-                  <Button
-                    width="100%"
-                    iconBefore={InfoSignIcon}
-                    appearance="primary"
-                    intent="warning"
-                    height={32}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}}
-                  >
-                    Info
-                  </Button>
-                </div>
+              <div className="p-2 lg:hidden flex-grow flex flex-col justify-between">
+              <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
+              <div className="flex justify-between space-x-2">
+                <IconButton 
+                  icon={PlayIcon}
+                  appearance="primary"
+                  intent="none"
+                  height={32}
+                  className="flex-1 flex justify-center items-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/movies/${movie._id}/watch`)
+                  }}
+                />
+                <IconButton 
+                  icon={VideoIcon}
+                  appearance="primary"
+                  intent="success"
+                  height={32}
+                  className="flex-1 flex justify-center items-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (movie.trailer) {
+                      window.open(movie.trailer, '_blank');
+                    } else {
+                      alert('Trailer not available');
+                    }
+                  }}
+                />
+                <IconButton
+                  icon={InfoSignIcon}
+                  appearance="primary"
+                  intent="danger"
+                  height={32}
+                  className="flex-1 flex justify-center items-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))
+                  }}
+                />
               </div>
+            </div>
               <div className="hidden lg:flex flex-col text-blue-50">
                 <h1 className="text-pretty text-center my-2">{movie.title}</h1>
                 <h1 className="text-xs text-center mb-3">{movie.genres.join(', ')}</h1>
@@ -201,7 +206,7 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   width="70%"
                   iconBefore={BookmarkIcon} 
                   appearance={bookmarkedMovies[movie._id] ? "primary" : "default"} 
-                  intent={bookmarkedMovies[movie._id] ? "warning" : "none"} 
+                  intent={bookmarkedMovies[movie._id] ? "danger" : "none"} 
                   height={28}
                   onClick={(e) => {
                     e.stopPropagation();

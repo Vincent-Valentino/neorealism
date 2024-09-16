@@ -84,18 +84,18 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
             exit={{ opacity: 0 }}
             className="p-4 bg-ebony-black pb-20"
           >
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {movies.map((movie, index) => (
                 <motion.div
                   key={movie._id || index}
-                  className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden"
+                  className="relative bg-night border border-licorice rounded-lg shadow-lg overflow-hidden flex flex-col"
                   onClick={() => navigate(`/movies/${movie._id}`)}
                 >
-                  <div className="relative">
+                  <div className="relative cursor-pointer aspect-[2/3] overflow-hidden">
                     <img 
                       src={movie.poster} 
                       alt={movie.title} 
-                      className="w-full h-auto object-cover rounded-t-lg cursor-pointer"
+                      className="w-full h-full object-cover absolute top-0 left-0"
                     />
                     <BookmarkIcon
                       size={30}
@@ -112,27 +112,26 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                       </div>
                     )}
                   </div>
-                  <div className="p-2 lg:hidden">
+                  <div className="p-2 lg:hidden flex-grow flex flex-col justify-between">
                     <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex justify-between space-x-2">
                       <Button 
-                        width="100%"
                         iconBefore={PlayIcon}
                         appearance="primary"
                         intent="success"
                         height={32}
+                        className="flex-1 flex justify-center items-center"
                         onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/movies/${movie._id}/watch`)}}
-                      >
-                        Play
-                      </Button>
+                          navigate(`/movies/${movie._id}/watch`)
+                        }}
+                      />
                       <Button 
-                        width="100%"
                         iconBefore={VideoIcon}
                         appearance="primary"
                         intent="none"
                         height={32}
+                        className="flex-1 flex justify-center items-center"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (movie.trailer) {
@@ -141,24 +140,21 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                             alert('Trailer not available');
                           }
                         }}
-                      >
-                        Trailer
-                      </Button>
+                      />
                       <Button
-                        width="100%"
                         iconBefore={InfoSignIcon}
                         appearance="primary"
-                        intent="warning"
+                        intent="danger"
                         height={32}
+                        className="flex-1 flex justify-center items-center"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))}}
-                      >
-                        Info
-                      </Button>
+                          setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className="hidden lg:flex flex-col text-blue-50">
+                  <div className="hidden lg:flex flex-col text-blue-50 p-2">
                     <h1 className="text-pretty text-center my-2">{movie.title}</h1>
                     <h1 className="text-xs text-center mb-3">{movie.genres.join(', ')}</h1>
                   </div>
@@ -193,9 +189,10 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                       appearance="primary" 
                       intent="success" 
                       height={28}
-                      onClick={(e) =>{
+                      onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/movies/${movie._id}/watch`)}}
+                        navigate(`/movies/${movie._id}/watch`)
+                      }}
                     >
                       Watch Now
                     </Button>

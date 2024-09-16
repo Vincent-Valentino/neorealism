@@ -62,7 +62,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
   };
 
   return (
-    <div className="relative w-full font-oswald">
+    <div className="relative w-full" style={{fontFamily: "Oswald"}}>
       {/* Video Section */}
       <div className="relative lg:h-screen">
         {video[currentMovieIndex] && (
@@ -96,9 +96,9 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
         <div className="text-yellow-50 w-full lg:w-1/3 mb-4 lg:mb-0 lg:mr-8 text-center lg:text-left">
           <div className="lg:block">
             <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 lg:mb-4">{currentMovie.title || 'Loading...'}</h1>
-            <p className="text-sm sm:text-base lg:text-2xl mb-2">{currentMovie.overview || ''}</p>
+            <p className="text-sm sm:text-base lg:text-2xl mb-2" style={{fontFamily:"Lato"}}>{currentMovie.overview || ''}</p>
             {/* Show these details only on lg screens */}
-            <div className="hidden lg:block">
+            <div className="hidden lg:block"  style={{fontFamily:"Lato"}}>
               <p className="text-lg">Genres: {currentMovie.genres?.join(', ') || 'N/A'}</p>
               <p className="text-lg">Rating: {currentMovie.imdbRating || 'N/A'}</p>
               <p className="text-lg mb-5">Director: {currentMovie.director || 'N/A'}</p>
@@ -114,7 +114,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
             <Button
               iconBefore={BookmarkIcon}
               appearance={bookmarkedMovies[currentMovie._id] ? "primary" : "default"}
-              intent={bookmarkedMovies[currentMovie._id] ? "warning" : "none"}
+              intent={bookmarkedMovies[currentMovie._id] ? "danger" : "none"}
               height={32}
               onClick={(e) => {
                 e.stopPropagation();
