@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from "../components/navbar.jsx";
 import SearchFilter from "../components/home-searchfilter.jsx";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { IconButton, Button, PlayIcon, VideoIcon, BookmarkIcon, InfoSignIcon } from 'evergreen-ui';
 import Loading from '../utilities/loading'; // Import the Loading component
@@ -12,6 +12,13 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
   const [showOverview, setShowOverview] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
+
+  const toggleOverview = (movieId) => {
+    setShowOverview(prev => ({
+      ...prev,
+      [movieId]: !prev[movieId]
+    }));
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -115,18 +122,26 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   }}
                   color={bookmarkedMovies[movie._id] ? "warning" : "muted"}
                 />
-                {showOverview[movie._id] && (
-                  <div className="absolute inset-0 bg-black bg-opacity-80 text-white p-2 overflow-y-auto">
-                    <p className="text-sm">{movie.overview || 'No overview available.'}</p>
-                  </div>
-                )}
+                <AnimatePresence>
+                  {showOverview[movie._id] && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 bg-black bg-opacity-80 text-white p-2 overflow-y-auto"
+                    >
+                      <p className="text-sm">{movie.overview || 'No overview available.'}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
               <div className="p-2 lg:hidden flex-grow flex flex-col justify-between">
               <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
               <div className="flex justify-between gap-2 mx-auto">
                 <IconButton 
                   icon={PlayIcon}
-                  appearance="primary"
+                  appearance="default"
                   intent="none"
                   height={32}
                   className="w-[30%] flex justify-center items-center"
@@ -158,7 +173,7 @@ function Movies({ bookmarkedMovies, toggleBookmark }) {
                   className="w-[30%] flex justify-center items-center"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setShowOverview(prev => !prev);
+                    toggleOverview(movie._id);
                   }}
                 />
               </div>

@@ -78,7 +78,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
           />
         )}
         {/* Video Controls - Hidden on lg screens */}
-        <div className="absolute bottom-4 right-4 flex space-x-2 lg:hidden">
+        <div className="absolute top-4 right-4 flex space-x-2 lg:hidden">
           <Button onClick={togglePlay} iconBefore={isPlaying ? "pause" : "play"}>
             {isPlaying ? "Pause" : "Play"}
           </Button>
@@ -104,7 +104,7 @@ const HeroSection = ({ movies = [], video = [], bookmarkedMovies = {}, toggleBoo
               <p className="text-lg mb-5">Director: {currentMovie.director || 'N/A'}</p>
             </div>
           </div>
-          <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+          <div className="flex text-sm justify-center lg:justify-start gap-2">
             <Button iconBefore={VideoIcon} appearance="primary" intent="none" height={32} onClick={() => window.open(currentMovie.trailer)}>
               Trailer
             </Button>

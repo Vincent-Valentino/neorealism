@@ -3,7 +3,8 @@ import Navbar from "../components/navbar";
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pane, Spinner, Text, Button, BookmarkIcon, VideoIcon, PlayIcon } from "evergreen-ui";
+import { Pane, Text, Button, BookmarkIcon, VideoIcon, PlayIcon } from "evergreen-ui";
+import Loading from "../utilities/loading";
 
 const isTokenExpired = (token) => {
   try {
@@ -89,7 +90,7 @@ const AccountPage = ({ toggleBookmark }) => {
     }));
   };
 
-  if (loading) return <Pane display="flex" alignItems="center" justifyContent="center" height="100vh"><Spinner /></Pane>;
+  if (loading) return (<div><Loading /></div>);
   if (error) return <Pane><Text color="danger">{error}</Text></Pane>;
 
   const tabs = ['Reels', 'Liked Reels', 'Bookmarked Movies', 'Reviews', 'Upload Reels'];
