@@ -104,7 +104,7 @@
               type="text"
               value={searchTerm}
               onChange={handleSearchChange}
-              placeholder="Search movies..."
+              placeholder="Parasite (2019)"
               className="w-full bg-onyx-black text-soft-white p-2 pl-10 rounded-full focus:outline-none focus:ring-2 focus:ring-electric-purple"
             />
             <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-3 text-electric-purple" />

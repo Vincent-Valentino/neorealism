@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Loading from "../utilities/loading";
 import Navbar from '../components/navbar';
 import { motion } from 'framer-motion';
-import { Button, BookmarkIcon, VideoIcon, PlayIcon, InfoSignIcon } from "evergreen-ui";
+import { IconButton, Button, BookmarkIcon, VideoIcon, PlayIcon, InfoSignIcon } from "evergreen-ui";
 
 const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
   const navigate = useNavigate();
@@ -13,6 +13,13 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showOverview, setShowOverview] = useState({});
+
+  const toggleOverview = (movieId) => {
+    setShowOverview(prev => ({
+      ...prev,
+      [movieId]: !prev[movieId] // Toggle the specific movie's overview
+    }));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,24 +121,24 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                   </div>
                   <div className="p-2 lg:hidden flex-grow flex flex-col justify-between">
                     <h3 className="text-sm font-semibold mb-2 text-white truncate">{movie.title}</h3>
-                    <div className="flex justify-between space-x-2">
-                      <Button 
-                        iconBefore={PlayIcon}
-                        appearance="primary"
-                        intent="success"
-                        height={32}
-                        className="flex-1 flex justify-center items-center"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/movies/${movie._id}/watch`)
-                        }}
-                      />
-                      <Button 
-                        iconBefore={VideoIcon}
+                    <div className="flex justify-between gap-1 mx-auto">
+                      <IconButton 
+                        icon={PlayIcon}
                         appearance="primary"
                         intent="none"
                         height={32}
-                        className="flex-1 flex justify-center items-center"
+                        className="w-[25%] flex justify-center items-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/movies/${movie._id}/watch`);
+                        }}
+                      />
+                      <IconButton 
+                        icon={VideoIcon}
+                        appearance="primary"
+                        intent="success"
+                        height={32}
+                        className="w-[25%] flex justify-center items-center"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (movie.trailer) {
@@ -141,15 +148,15 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                           }
                         }}
                       />
-                      <Button
-                        iconBefore={InfoSignIcon}
+                      <IconButton
+                        icon={InfoSignIcon}
                         appearance="primary"
                         intent="danger"
                         height={32}
-                        className="flex-1 flex justify-center items-center"
+                        className="w-[25%] flex justify-center items-center"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setShowOverview(prev => ({ ...prev, [movie._id]: !prev[movie._id] }))
+                          toggleOverview(movie._id);
                         }}
                       />
                     </div>
