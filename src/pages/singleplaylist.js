@@ -124,7 +124,7 @@ const SinglePlaylist = ({ bookmarkedMovies, toggleBookmark }) => {
                     <div className="flex justify-between gap-1 mx-auto">
                       <IconButton 
                         icon={PlayIcon}
-                        appearance="primary"
+                        appearance="default"
                         intent="none"
                         height={32}
                         className="w-[25%] flex justify-center items-center"

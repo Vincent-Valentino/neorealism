@@ -114,7 +114,7 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
               <Button 
                 width="70%"
                 iconBefore={VideoIcon} 
-                appearance="primary" 
+                appearance="default" 
                 intent="none" 
                 height={28} 
                 onClick={(e) => {

@@ -56,7 +56,7 @@ const MovieDetails = ({ bookmarkedMovies, toggleBookmark }) => {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 py-8">
         <div className="flex flex-col lg:flex-row">
           {/* Left Column - Movie Information */}
           <div className="lg:w-2/3 lg:pr-8">
