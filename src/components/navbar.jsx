@@ -79,7 +79,7 @@ const Navbar = () => {
                 animate={{ color: colors[currentColorIndex] }}
                 transition={{ duration: 1 }}
                 className="text-2xl font-bold"
-                style={{ fontFamily: "Abril Fatface" }}
+                style={{ fontFamily: "Kanit" }}
               >
                 Surrealism
               </motion.span>
