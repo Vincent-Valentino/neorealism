@@ -62,7 +62,7 @@ const SearchDisplay = ({ movies, bookmarkedMovies, toggleBookmark }) => {
               <div className="flex justify-between gap-2 mx-auto">
                 <IconButton 
                   icon={PlayIcon}
-                  appearance="primary"
+                  appearance="default"
                   intent="none"
                   height={32}
                   className="w-[30%] flex justify-center items-center"
