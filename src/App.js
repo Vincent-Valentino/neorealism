@@ -7,6 +7,7 @@ import Movies from './pages/movies';
 import Reels from './pages/reels';
 import Account from './pages/account';
 import Movie from './pages/singlemovie';
+import Top from './pages/top250';
 import Playlist from "./pages/playlist";
 import SinglePlaylist from "./pages/singleplaylist";
 import Review from "./pages/review";
@@ -171,6 +172,13 @@ function App() {
         path="/movies/:movie_id/watch" 
         element={
           <ProtectedRoute element={<Watch/>} />
+        } 
+      />
+
+      <Route 
+        path="/imdb250" 
+        element={
+          <ProtectedRoute element={<Top/>} />
         } 
       />
 
