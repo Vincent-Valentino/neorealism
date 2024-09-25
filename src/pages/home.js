@@ -44,11 +44,13 @@ function Home({ bookmarkedMovies, toggleBookmark }) {
   useEffect(() => {
     const videoArray = [];
     const selected = [];
-    data.map((obj) => {
+    
+    // Use forEach instead of map since you're not returning anything
+    data.forEach((obj) => {
       videoArray.push(obj.clip);
       selected.push(obj.movie);
     });
-    
+  
     setVideo(videoArray);
     setSelectedMovies(selected);
   }, [data]);
