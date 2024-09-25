@@ -129,9 +129,8 @@ const Navbar = () => {
             <NavLink to="/movies" icon={faFilm}>Movies</NavLink>
             <NavLink to="/account" icon={faUser}>Account</NavLink>
             <NavLink to="/playlist" icon={faTv}>Playlist</NavLink>
-            <NavLink to="/imdb250" icon={faStar}>IMDB 250</NavLink>
-            <NavLink disabled to="/coming" icon={faStar}>Review</NavLink>
-            <NavLink disabled to="/coming" icon={faCompass}>Explore</NavLink>
+            <NavLink disabled to="/coming" icon={faStar}>Review - Coming Soon</NavLink>
+            <NavLink disabled to="/coming" icon={faCompass}>Explore - Coming Soon</NavLink>
           </div>
           <div className="border-t border-gray-700">
             <button
