@@ -17,7 +17,7 @@ const useAuth = () => {
         if (!storedRefreshToken) {
           setIsAuthenticated(false);
           setLoading(false);
-          return;
+          return {isAuthenticated, loading};
         }
 
         // Attempt to refresh the access token using the refresh token
